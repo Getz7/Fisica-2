@@ -1,31 +1,37 @@
-import math
-import matplotlib.pyplot as plt
+# Importamos las librerías necesarias
+import math                 # Para operaciones matemáticas como raíz cuadrada
+import matplotlib.pyplot as plt   # Para graficar el sistema
+
 
 def calcular_fuerza(q1, q2, x2, y2):
     # Constante de Coulomb (N·m²/C²)
     k = 9 * (10**9)
     
-    # Vector de posición de Q2 respecto a Q1 (que está en el origen)
-    dx = x2
-    dy = y2
-    r = math.sqrt(dx**2 + dy**2)
 
+    # Coordenadas relativas: diferencia de posición entre Q2 y Q1
+    dx = x2      # Q1 está en el origen, así que dx = x2 - 0
+    dy = y2  
+    r = math.sqrt(dx**2 + dy**2)  # Distancia entre las cargas
+
+    # Verifica que las cargas no estén en el mismo punto
     if r == 0:
         raise ValueError("Las cargas no pueden estar en la misma posición (división por cero).")
     
-    # Magnitud de la fuerza (Ley de Coulomb)
+    # Magnitud de la fuerza (sin dirección todavía)
     magnitud = k * abs(q1 * q2) / r**2
 
-    # Dirección: vector unitario
-    ux = dx / r
-    uy = dy / r
+   # Calculamos el vector unitario (dirección del vector)
+    ux = dx / r  # componente x del vector unitario
+    uy = dy / r  # componente y del vector unitario
 
-    # Dirección del vector de fuerza (repulsión o atracción)
-    signo = 1 if q1 * q2 > 0 else -1
+
+    # Determina si la fuerza es de repulsión (+) o atracción (-)
+    signo = 1 if q1 * q2 > 0 else -1  # Si los signos son iguales: repulsión (positivo)
 
     fx = signo * magnitud * ux
     fy = signo * magnitud * uy
 
+     # Devolvemos el vector fuerza como dos componentes
     return fx, fy
 
 def graficar(q1, q2, x2, y2, fx, fy):
@@ -46,6 +52,7 @@ def graficar(q1, q2, x2, y2, fx, fy):
 def main():
     print("Cálculo de Fuerza Eléctrica entre dos cargas puntuales")
     try:
+        #Toma de datos
         q1 = float(input("Ingresa el valor de la carga Q1 (Coulombs): "))
         q2 = float(input("Ingresa el valor de la carga Q2 (Coulombs): "))
         x2 = float(input("Ingresa la coordenada x de Q2 (en metros): "))
